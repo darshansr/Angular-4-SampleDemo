@@ -1,0 +1,60 @@
+<div class='panel panel-primary'>
+    <div class='panel-heading'>
+        {{pageTitle}}
+    </div>
+    <div class='panel-body'>
+            <div class='row'>
+                    <div class='col-md-2'>Filter by:</div>
+                    <div class='col-md-4'>
+                        <input type='text' [(ngModel)]='listFilter' />
+                    </div>
+                </div>
+                <div class='row'>
+                    <div class='col-md-6'>
+                        <h3>Filtered by: {{listFilter}} </h3>
+                    </div>
+                </div>
+            
+        <div class='table-responsive'>
+            <table class='table'
+                    *ngIf='product && product.length'>
+                <thead>
+                    <tr>
+                        <th>
+                            <button class='btn btn-primary' 
+                                (click)='toggleImage()'>
+                                {{showImage ? 'Hide' : 'Show'}} Image 
+                            </button>
+                        </th>
+                        <th>Product</th>
+                        <th>Code</th>
+                        <th>Available</th>
+                        <th>Price</th>
+                        <th>5 Star Rating</th>
+                    </tr>
+                </thead>
+                <tbody appSortableList (sort)="sort($event)">
+                    <tr *ngFor='let Product of product' appSortable>
+                            <td>
+                                <img *ngIf='showImage' 
+                                    [src]='Product.imageUrl'
+                                    [title]='Product.productName'
+                                    [style.width.px]='imageWidth'
+                                    [style.margin.px]='imageMargin'>                            
+                            </td>
+                            <td>
+                                {{ Product.productName }}
+                            </td>
+                            <td>{{ Product.productCode | lowercase | convertToSpace:'-' }}</td>
+                            <td>{{ Product.releaseDate }}</td>
+                            <td>{{ Product.price}}</td>
+                            <td>
+                                {{sortableList.starRating}}
+                            </td>
+                        
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
